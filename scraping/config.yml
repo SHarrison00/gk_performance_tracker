@@ -1,0 +1,15 @@
+
+scraping:
+  headless: False
+  wait_seconds: 3
+  request_delay_seconds: 2
+  
+  output_directory: "data/raw/fbref/matchlogs"
+  file_format: "csv"   
+
+
+players:
+  - player_id: "2f965a72"
+    player_slug: "Alphonse-Areola"
+    seasons:
+      - "2025-2026"
