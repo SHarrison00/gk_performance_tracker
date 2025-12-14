@@ -1,8 +1,9 @@
 import argparse
-from pathlib import Path
 import time
+from pathlib import Path
 
 from .scraper import FBRefScraper, load_config
+from .utils import ts
 
 
 def build_matchlog_url(player_id: str, season: str, player_slug: str) -> str:
@@ -33,13 +34,13 @@ def cmd_scrape_matchlogs(args):
                     season = season,
                     player_slug = player["player_slug"],
                 )
-                print(f"Scraping {url} ...")
+                print(f"[{ts()}] Scraping {url} ...")
                 df = scraper.scrape_url_to_df(url)
 
                 out_name = f"{player['player_slug']}_{season}.csv"
                 out_path = output_dir / out_name
                 df.to_csv(out_path, index=False)
-                print(f"Saved -> {out_path}")
+                print(f"[{ts()}] Saved -> {out_path}")
 
                 time.sleep(scrape_cfg.get("request_delay_seconds", 2))
 

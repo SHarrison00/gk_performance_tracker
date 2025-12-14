@@ -1,10 +1,15 @@
+import time
+from io import StringIO
+from pathlib import Path
+
+import pandas as pd
+import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import time
-import pandas as pd
-from io import StringIO
-import yaml
-from pathlib import Path
+from selenium.webdriver.chrome.service import Service
+
+from .utils import ts
+
 
 JS_EXTRACT_TABLE = """
 const table = document.getElementById("matchlogs_all");
@@ -33,10 +38,17 @@ return rows.join("\\n");
 
 class FBRefScraper:
     def __init__(self, headless: bool = False, wait_seconds = 5):
+
         options = Options()
+        service = Service("/usr/local/bin/chromedriver")
+                
         if headless:
             options.add_argument("--headless=new")
-        self.driver = webdriver.Chrome(options=options) 
+        
+        self.driver = webdriver.Chrome(
+            service=service,
+            options=options
+        )        
         self.wait_seconds = wait_seconds
 
     
@@ -45,11 +57,19 @@ class FBRefScraper:
 
 
     def scrape_url_to_df(self, url: str) -> pd.DataFrame:
+        
         self.driver.get(url)
         time.sleep(self.wait_seconds)
+        
         csv_text = self.driver.execute_script(JS_EXTRACT_TABLE)
+        
         if not csv_text or csv_text.startswith("NO_TABLE"):
-            raise RuntimeError(f"Failed to extract table from {url}: {csv_text}")
+          raise RuntimeError(
+              f"[{ts()}] Failed to extract table.\n"
+              f"URL: {url}\n"
+              f"csv_text: {csv_text}"
+          )        
+        
         return pd.read_csv(StringIO(csv_text))
 
 
