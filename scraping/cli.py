@@ -3,7 +3,7 @@ import time
 from pathlib import Path
 
 from .scraper import FBRefScraper, load_config
-from .utils import ts
+from utils.logging import ts
 
 
 def build_matchlog_url(player_id: str, season: str, player_slug: str) -> str:
@@ -39,6 +39,7 @@ def cmd_scrape_matchlogs(args):
 
                 out_name = f"{player['player_slug']}_{season}.csv"
                 out_path = output_dir / out_name
+                
                 df.to_csv(out_path, index=False)
                 print(f"[{ts()}] Saved -> {out_path}")
 
@@ -57,3 +58,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+""" 
+
+    python3.10  -m scraping.cli --config scraping/config.yml
+
+"""

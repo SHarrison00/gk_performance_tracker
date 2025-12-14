@@ -8,8 +8,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
-from .utils import ts
-
+from utils.logging import ts
 
 JS_EXTRACT_TABLE = """
 const table = document.getElementById("matchlogs_all");

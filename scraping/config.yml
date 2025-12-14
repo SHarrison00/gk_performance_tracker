@@ -9,10 +9,10 @@ scraping:
 
 
 players:
-  # - player_id: "2f965a72"
-  #   player_slug: "Alphonse-Areola"
-  #   seasons:
-  #     - "2025-2026"
+  - player_id: "2f965a72"
+    player_slug: "Alphonse-Areola"
+    seasons:
+      - "2025-2026"
 
   - player_id: "7a2e46a8"
     player_slug: "Alisson"
