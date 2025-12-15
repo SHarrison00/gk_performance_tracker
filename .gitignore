@@ -115,3 +115,6 @@ dmypy.json
 
 # FBREF data folders 
 matchlogs/
+
+# Notebooks
+notebooks/

@@ -62,6 +62,6 @@ if __name__ == "__main__":
 
 """ 
 
-    python3.10  -m scraping.cli --config scraping/config.yml
+    python3.10 -m scraping.cli --config scraping/config.yml
 
 """
