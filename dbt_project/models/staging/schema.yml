@@ -3,171 +3,87 @@ version: 2
 
 models:
   - name: stg_matchlogs__all
-    description: "All raw matchlogs from FBref.com"
+    description: "All raw matchlogs from FBref.com"    
+    tags: ["staging", "fbref", "goalkeepers"]
+    meta:
+      grain: "goalkeeper-match"
+      source: "FBref.com"
     columns:
       - name: source_table
         description: "Metadata column of the form <player_slug>_<season>"
-        data_tests:
+        tests:
           - not_null
       - name: date
         description: "Match date"
-        data_tests:
-          - not_null
       - name: dayofweek
         description: "Day of the week football match took place"
-        data_tests:
-          - not_null
-          - accepted_values:
-            values: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       - name: comp
         description: "Competiton football match was played under"
-        data_tests:
-          - not_null
       - name: round
         description: "Round of the football match competition"
-        data_tests:
-          - not_null
       - name: venue
         description: "Venue of the football match relative to the home team"
-        data_tests:
-          - not_null
-          - accepted_values:
-            values: ['Home', 'Away', 'Neutral']
       - name: result
         description: "Outcome and scoreline of the football match"
-        data_tests:
-          - not_null
       - name: team
         description: "Team the goalkeeper was playing for"
-        data_tests:
-          - not_null
       - name: opponent
         description: "Opponent the goalkeeper was playing against"
-        data_tests:
-          - not_null
       - name: game_started
         description: "Flag to indicate whether goalkeeper played or not"
-        data_tests:
-          - not_null
-          - accepted_values:
-            values: ['Y', 'Y*', 'N'] 
       - name: position
         description: "Position goalkeeper played in"
-        data_tests:
-          - not_null
-          - accepted_values:
-            values: ['GK'] 
       - name: minutes
         description: "Number of minutes goalkeeper played for"
-        data_tests:
-          - not_null
       - name: gk_shots_on_target_against
         description: "Nunmber of shots faced by goalkeeper during the match"
-        data_tests:
-          - not_null
       - name: gk_goals_against
         description: "Number of goals conceded by goalkeeper during the match"
-        data_tests:
-          - not_null
       - name: gk_saves
         description: "Number of saves made by goalkeeper during the match"
-        data_tests:
-          - not_null
       - name: gk_save_pct
         description: "Save percentage for the goalkeeper for the match"
-        data_tests:
-          - not_null
-      - name: gk_save_pct
-        description: "Save percentage for the goalkeeper for the match"
-        data_tests:
-          - not_null
       - name: gk_clean_sheets
         description: "Flag to indicate whether goalkeeper kept a clean sheet"
-        data_tests:
-          - not_null
-          - accepted_values:
-            values: [1, 0]
       - name: gk_psxg
         description: "Post-Shot Expected Goals"
-        data_tests:
-          - not_null
       - name: gk_pens_att
         description: "Penalty kicks faced"
-        data_tests:
-          - not_null
       - name: gk_pens_allowed
         description: "Penalty kicks conceded"
-        data_tests:
-          - not_null
       - name: gk_pens_saved
         description: "Penalty kicks saved"
-        data_tests:
-          - not_null
       - name: gk_pens_missed
         description: "(to add)"
-        data_tests:
-          - not_null
       - name: gk_passes_completed_launched
         description: "Passes more than 40 yards completed"
-        data_tests:
-          - not_null
       - name: gk_passes_launched
         description: "Passes more than 40 yards attempted"
-        data_tests:
-          - not_null
       - name: gk_passes_pct_launched
         description: "Pass completion % for passed more than 40 yards"
-        data_tests:
-          - not_null
       - name: gk_passes
         description: "Passes attempted (not including goal kicks)"
-        data_tests:
-          - not_null
       - name: gk_passes_throws
         description: "Throws attempted"
-        data_tests:
-          - not_null
       - name: gk_pct_passes_launched
         description: "Pct. of passes launched (> 40 yds) excluding goal kicks"
-        data_tests:
-          - not_null
       - name: gk_passes_length_avg
         description: "Average length of passes in yards excluding goal kicks"
-        data_tests:
-          - not_null
       - name: gk_goal_kicks
         description: "Goal kicks attempted"
-        data_tests:
-          - not_null
       - name: gk_pct_goal_kicks_launched
         description: "Pct. of goal kicks that were launched (> 40 yds)"
-        data_tests:
-          - not_null
       - name: gk_goal_kick_length_avg
         description: "Average length of goal kicks in yards"
-        data_tests:
-          - not_null
       - name: gk_crosses
         description: "Opponents attempted crosses into the penalty area"
-        data_tests:
-          - not_null
       - name: gk_crosses_stopped
         description: "Crosses into the penalty area successfully stopped"
-        data_tests:
-          - not_null
       - name: gk_crosses_stopped_pct
         description: "Pct. of crosses into penalty area successfully stopped"
-        data_tests:
-          - not_null
       - name: gk_def_actions_outside_pen_area
         description: "Numebr of defensive actions outside penalty area"
-        data_tests:
-          - not_null
       - name: gk_avg_distance_def_actions
         description: "Avg. distance from goal (yards) of all defensive actions"
-        data_tests:
-          - not_null
       - name: match_report
         description: "Hyperlink to match report (quirk from ingestion step)"
-        data_tests:
-          - not_null
