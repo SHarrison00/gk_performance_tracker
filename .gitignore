@@ -116,5 +116,5 @@ dmypy.json
 # FBREF data folders 
 matchlogs/
 
-# Notebooks
-notebooks/
+# DuckDB database
+dev.duckdb/
