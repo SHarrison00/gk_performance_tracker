@@ -118,3 +118,6 @@ matchlogs/
 
 # DuckDB database
 dev.duckdb/
+
+# Desktop services store
+.DS_Store
