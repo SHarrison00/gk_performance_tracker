@@ -1,14 +1,20 @@
+import re
 import time
 from io import StringIO
 from pathlib import Path
+from urllib.parse import urljoin
 
 import pandas as pd
 import yaml
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from utils.logging import ts
+
 
 JS_EXTRACT_TABLE = """
 const table = document.getElementById("matchlogs_all");
@@ -35,6 +41,10 @@ table.querySelectorAll("tbody tr").forEach(tr => {
 return rows.join("\\n");
 """
 
+# Matches: /en/players/<player_id>/<player_slug>
+PLAYER_RE = re.compile(r"^/en/players/([^/]+)/([^/]+)$")
+
+
 class FBRefScraper:
     def __init__(self, headless: bool = False, wait_seconds = 5):
 
@@ -55,7 +65,47 @@ class FBRefScraper:
         self.driver.quit()
 
 
-    def scrape_url_to_df(self, url: str) -> pd.DataFrame:
+    @staticmethod
+    def build_matchlogs_url(player_id: str, player_slug: str) -> str:
+        return (
+            f"https://fbref.com/en/players/{player_id}/matchlogs/"
+            f"{{season}}/{player_slug}-Match-Logs"
+        )
+
+
+    def scrape_player_matchlogs_urls(self, base_url: str) -> list[dict]:
+
+        self.driver.get(base_url)
+        time.sleep(self.wait_seconds)
+
+        els = self.driver.find_elements(
+            By.CSS_SELECTOR, 'td[data-stat="player"] a[href]')
+
+        players_by_id: dict[str, dict] = {}
+
+        # Iterate across player links
+        for a in els:
+            href = a.get_attribute("href") or ""
+            path = href.replace("https://fbref.com", "")
+
+            match = PLAYER_RE.match(path)
+            if not match:
+                continue
+            
+            player_id, player_slug = match.group(1), match.group(2)
+            matchlogs_url = self.build_matchlogs_url(player_id, player_slug)
+
+            players_by_id[player_id] = {
+                "player_id": player_id,
+                "player_slug": player_slug,
+                "player_url": urljoin("https://fbref.com", path),
+                "matchlogs_url": matchlogs_url,
+            }
+
+        return list(players_by_id.values())
+
+
+    def scrape_player_matchlogs_data(self, url: str) -> pd.DataFrame:
         
         self.driver.get(url)
         time.sleep(self.wait_seconds)
