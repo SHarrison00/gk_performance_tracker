@@ -1,0 +1,79 @@
+
+version: 2
+
+models:
+  - name: fct_goalkeeper_performance
+    description: "Aggregated goalkeeper performance metrics for EPL matches"    
+    meta:
+      grain: "goalkeeper"
+      source: "FBref.com"
+    columns:
+      - name: goalkeeper
+        description: "Goalkeeper identifier"
+        tests:
+          - not_null
+
+      - name: team
+        description: "Goalkeeper's team identifier"
+        tests:
+          - not_null
+
+      - name: matches_played
+        description: >
+          Number of Premier League matches in which the goalkeeper played
+          at least one minute for the given team.
+
+      - name: clean_sheets
+        description: >
+          Total number of clean sheets kept by the goalkeeper.
+
+      - name: ga
+        description: "Total number of goals conceded by the goalkeeper"
+
+      - name: saves
+        description: "Total number of saves made by the goalkeeper"
+
+      - name: shots_on_target_against
+        description: "Total number of shots on target faced by the goalkeeper"
+
+      - name: save_pct
+        description: >
+          Save percentage calculated as total saves divided by
+          shots on target faced, expressed as a percentage.
+
+      - name: pxsg_minus_ga
+        description: >
+          Difference between post-shot expected goals conceded (PSxG)
+          and actual goals conceded. Positive values indicate goals prevented
+          relative to shot quality faced.
+
+      - name: crosses_faced_p90
+        description: >
+          Average number of opposition crosses faced per 90 minutes played,
+          calculated from total crosses divided by minutes played.
+
+      - name: crosses_stopped_pct
+        description: >
+          Percentage of opposition crosses into the penalty area
+          that were successfully stopped by the goalkeeper.
+
+      - name: pass_att_p90
+        description: >
+          Average number of passes attempted per 90 minutes played,
+          excluding goal kicks.
+
+      - name: long_kick_pass_completion_pct
+        description: >
+          Completion percentage for launched passes over 40 yards,
+          calculated from completed versus attempted launched passes.
+
+      - name: def_actions_outside_pen_area_p90
+        description: >
+          Average number of defensive actions taken outside the penalty area
+          per 90 minutes played, representing sweeping activity.
+
+      - name: avg_distance_def_actions
+        description: >
+          Average distance from goal (in yards) of defensive actions
+          taken outside the penalty area.
+      

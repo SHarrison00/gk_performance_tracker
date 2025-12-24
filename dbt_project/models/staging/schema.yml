@@ -4,86 +4,237 @@ version: 2
 models:
   - name: stg_matchlogs__all
     description: "All raw matchlogs from FBref.com"    
-    tags: ["staging", "fbref", "goalkeepers"]
     meta:
       grain: "goalkeeper-match"
       source: "FBref.com"
     columns:
       - name: source_table
-        description: "Metadata column of the form <player_slug>_<season>"
+        description: "Original source table name, i.e. <player_slug>_<season>"
         tests:
           - not_null
+
       - name: date
         description: "Match date"
+
       - name: dayofweek
         description: "Day of the week football match took place"
+
       - name: comp
-        description: "Competiton football match was played under"
+        description: "Competition the match was played in (e.g. Premier League)"
+
       - name: round
-        description: "Round of the football match competition"
+        description: "Competition round of the match"
+
       - name: venue
-        description: "Venue of the football match relative to the home team"
+        description: "Venue of the match relative to the goalkeeper's team"
+
       - name: result
-        description: "Outcome and scoreline of the football match"
+        description: "Match result and scoreline"
+
       - name: team
-        description: "Team the goalkeeper was playing for"
+        description: "Team the goalkeeper represented in the match"
+
       - name: opponent
-        description: "Opponent the goalkeeper was playing against"
+        description: "Opposing team in the match"
+
       - name: game_started
-        description: "Flag to indicate whether goalkeeper played or not"
+        description: "Flag indicating whether the goalkeeper started the match"
+
       - name: position
         description: "Position goalkeeper played in"
+
       - name: minutes
         description: "Number of minutes goalkeeper played for"
+
       - name: gk_shots_on_target_against
-        description: "Nunmber of shots faced by goalkeeper during the match"
+        description: "Number of shots on target faced by the goalkeeper"
+
       - name: gk_goals_against
-        description: "Number of goals conceded by goalkeeper during the match"
+        description: "Number of goals conceded by the goalkeeper"
+
       - name: gk_saves
-        description: "Number of saves made by goalkeeper during the match"
+        description: "Number of saves made by the goalkeeper"
+
       - name: gk_save_pct
         description: "Save percentage for the goalkeeper for the match"
+
       - name: gk_clean_sheets
         description: "Flag to indicate whether goalkeeper kept a clean sheet"
+
       - name: gk_psxg
-        description: "Post-Shot Expected Goals"
+        description: "Post-shot expected goals conceded"
+
       - name: gk_pens_att
-        description: "Penalty kicks faced"
+        description: "Penalty kicks faced by the goalkeeper"
+
       - name: gk_pens_allowed
         description: "Penalty kicks conceded"
+
       - name: gk_pens_saved
-        description: "Penalty kicks saved"
+        description: "Penalty kicks saved by the goalkeeper"
+
       - name: gk_pens_missed
-        description: "(to add)"
+        description: "Penalty kicks missed by the opponent"
+
       - name: gk_passes_completed_launched
-        description: "Passes more than 40 yards completed"
+        description: "Number of launched passes completed"
+
       - name: gk_passes_launched
-        description: "Passes more than 40 yards attempted"
+        description: "Number of passes launched over 40 yards"
+
       - name: gk_passes_pct_launched
         description: "Pass completion % for passed more than 40 yards"
+
       - name: gk_passes
-        description: "Passes attempted (not including goal kicks)"
+        description: "Total passes attempted excluding goal kicks"
+
       - name: gk_passes_throws
-        description: "Throws attempted"
+        description: "Number of throws attempted by the goalkeeper"
+
       - name: gk_pct_passes_launched
         description: "Pct. of passes launched (> 40 yds) excluding goal kicks"
+
       - name: gk_passes_length_avg
         description: "Average length of passes in yards excluding goal kicks"
+
       - name: gk_goal_kicks
         description: "Goal kicks attempted"
+
       - name: gk_pct_goal_kicks_launched
         description: "Pct. of goal kicks that were launched (> 40 yds)"
+
       - name: gk_goal_kick_length_avg
         description: "Average length of goal kicks in yards"
+
       - name: gk_crosses
-        description: "Opponents attempted crosses into the penalty area"
+        description: "Number of opposition crosses into the penalty area"
+
       - name: gk_crosses_stopped
-        description: "Crosses into the penalty area successfully stopped"
+        description: "Number of opposition crosses successfully stopped"
+
       - name: gk_crosses_stopped_pct
-        description: "Pct. of crosses into penalty area successfully stopped"
+        description: "Pct. of crosses into penalty area successfully stopped"      
+
       - name: gk_def_actions_outside_pen_area
-        description: "Numebr of defensive actions outside penalty area"
+        description: "Number of defensive actions outside the penalty area"
+
       - name: gk_avg_distance_def_actions
-        description: "Avg. distance from goal (yards) of all defensive actions"
+        description: "Average distance from goal (yards) of defensive actions"
+
       - name: match_report
         description: "Hyperlink to match report (quirk from ingestion step)"
+
+
+
+
+  - name: stg_matchlogs__parsed
+    description: >
+      Cleaned and parsed match-level goalkeeper data derived from matchlogs
+    meta:
+      grain: "goalkeeper-match"
+      source: "FBref.com"
+    columns:
+      - name: source_table
+        description: "Original source table name, i.e. <player_slug>_<season>"
+        tests:
+          - not_null
+
+      - name: goalkeeper
+        description: "Goalkeeper identifier extracted from source_table"
+        tests:
+          - not_null
+
+      - name: season
+        description: "Season identifier extracted from source_table"
+        tests:
+          - not_null      
+
+      - name: match_date
+        description: "Date the match was played"
+
+      - name: competition
+        description: "Competition the match was played in (e.g. Premier League)"
+
+      - name: round
+        description: "Competition round of the match"
+
+      - name: venue
+        description: "Venue of the match relative to the goalkeeper's team"
+
+      - name: result
+        description: "Match result and scoreline"
+
+      - name: team
+        description: "Team the goalkeeper represented in the match"
+
+      - name: opponent
+        description: "Opposing team in the match"
+
+      - name: game_started
+        description: "Flag indicating whether the goalkeeper started the match"
+
+      - name: minutes_played
+        description: "Number of minutes played by the goalkeeper in the match"
+
+      - name: gk_shots_on_target_against
+        description: "Number of shots on target faced by the goalkeeper"
+
+      - name: gk_goals_against
+        description: "Number of goals conceded by the goalkeeper"
+
+      - name: gk_saves
+        description: "Number of saves made by the goalkeeper"
+
+      - name: gk_clean_sheets
+        description: "Indicator of whether the goalkeeper kept a clean sheet"
+
+      - name: gk_psxg
+        description: "Post-shot expected goals conceded"
+
+      - name: gk_pens_att
+        description: "Penalty kicks faced by the goalkeeper"
+
+      - name: gk_pens_allowed
+        description: "Penalty kicks conceded"
+
+      - name: gk_pens_saved
+        description: "Penalty kicks saved by the goalkeeper"
+
+      - name: gk_pens_missed
+        description: "Penalty kicks missed by the opponent"
+
+      - name: gk_passes_launched
+        description: "Number of passes launched over 40 yards"
+
+      - name: gk_passes_completed_launched
+        description: "Number of launched passes completed"
+
+      - name: gk_passes
+        description: "Total passes attempted excluding goal kicks"
+
+      - name: gk_passes_throws
+        description: "Number of throws attempted by the goalkeeper"
+
+      - name: gk_passes_length_avg
+        description: "Avgerage length of passes (yards), excl. goal kicks"
+
+      - name: gk_goal_kicks
+        description: "Number of goal kicks taken"
+
+      - name: gk_goal_kicks_launched
+        description: "Number of goal kicks launched over 40 yards"
+
+      - name: gk_goal_kick_length_avg
+        description: "Average length of goal kicks (yards)"
+
+      - name: gk_crosses
+        description: "Number of opposition crosses into the penalty area"
+
+      - name: gk_crosses_stopped
+        description: "Number of opposition crosses successfully stopped"
+
+      - name: gk_def_actions_outside_pen_area
+        description: "Number of defensive actions outside the penalty area"
+
+      - name: gk_avg_distance_def_actions
+        description: "Average distance from goal (yards) of defensive actions"

@@ -10,3 +10,7 @@ ipywidgets
 
 # Selenium
 selenium>=4.15,<5.0
+
+# dbt
+dbt-core==1.10.15
+dbt-duckdb==1.10.0
