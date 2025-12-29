@@ -14,3 +14,7 @@ selenium>=4.15,<5.0
 # dbt
 dbt-core==1.10.15
 dbt-duckdb==1.10.0
+
+# Visualisation
+plotly>=5.20.0
+dash>=2.16.0  
