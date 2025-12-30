@@ -113,8 +113,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# FBREF data folders 
-matchlogs/
+# Data folders 
+data/
 
 # DuckDB database
 dev.duckdb/
