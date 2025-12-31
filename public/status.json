@@ -1,0 +1,71 @@
+{
+  "cli.py": {
+    "info": "Extract/scrape player matchlogs raw data.",
+    "started_utc": "2025-12-31T16:51:56+00:00",
+    "finished_utc": "2025-12-31T16:55:05+00:00",
+    "duration_s": 189.029,
+    "tables": null
+  },
+  "load_duckdb.py": {
+    "info": "Load player matchlogs data into DB.",
+    "started_utc": "2025-12-31T16:55:08+00:00",
+    "finished_utc": "2025-12-31T16:55:09+00:00",
+    "duration_s": 1.137,
+    "tables": {
+      "aaron_ramsdale_2025_2026": "28 rows",
+      "alisson_2025_2026": "19 rows",
+      "alphonse_areola_2025_2026": "20 rows",
+      "altay_bayindir_2025_2026": "26 rows",
+      "bart_verbruggen_2025_2026": "25 rows",
+      "bernd_leno_2025_2026": "22 rows",
+      "caoimhin_kelleher_2025_2026": "27 rows",
+      "david_raya_2025_2026": "34 rows",
+      "dean_henderson_2025_2026": "36 rows",
+      "djordje_petrovic_2025_2026": "26 rows",
+      "emiliano_martinez_2025_2026": "22 rows",
+      "filip_jorgensen_2025_2026": "37 rows",
+      "gianluigi_donnarumma_2025_2026": "33 rows",
+      "giorgi_mamardashvili_2025_2026": "32 rows",
+      "guglielmo_vicario_2025_2026": "31 rows",
+      "james_trafford_2025_2026": "33 rows",
+      "john_2025_2026": "36 rows",
+      "jordan_pickford_2025_2026": "25 rows",
+      "jose_sa_2025_2026": "24 rows",
+      "karl_darlow_2025_2026": "24 rows",
+      "lucas_perri_2025_2026": "15 rows",
+      "mads_hermansen_2025_2026": "26 rows",
+      "marco_bizot_2025_2026": "26 rows",
+      "martin_dubravka_2025_2026": "25 rows",
+      "matz_sels_2025_2026": "29 rows",
+      "nick_pope_2025_2026": "21 rows",
+      "robert_sanchez_2025_2026": "30 rows",
+      "robin_roefs_2025_2026": "24 rows",
+      "sam_johnstone_2025_2026": "21 rows",
+      "senne_lammens_2025_2026": "23 rows"
+    }
+  },
+  "run_dbt_build.py": {
+    "info": "Transform loaded data into final tables using dbt.",
+    "started_utc": "2025-12-31T16:55:10+00:00",
+    "finished_utc": "2025-12-31T16:55:25+00:00",
+    "duration_s": 15.803,
+    "tables": null
+  },
+  "stage_public_tables.py": {
+    "info": "Export DuckDB tables to public/ for downstream upload to S3.",
+    "started_utc": "2025-12-31T16:55:26+00:00",
+    "finished_utc": "2025-12-31T16:55:26+00:00",
+    "duration_s": 0.076,
+    "tables": {
+      "fct_goalkeeper_performance": "30 rows",
+      "mart_goalkeeper_league_ratings": "25 rows"
+    }
+  },
+  "upload_public_to_s3.py": {
+    "info": "Upload data to S3 (and history snapshot for rollback).",
+    "started_utc": "2025-12-31T16:55:26+00:00",
+    "finished_utc": "2025-12-31T16:55:34+00:00",
+    "duration_s": 7.745,
+    "tables": null
+  }
+}

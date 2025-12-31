@@ -4,62 +4,61 @@ import time
 from pathlib import Path
 
 from .scraper import FBRefScraper, load_config
-from utils.logging import ts, write_manifest, now_iso_utc
+from utils.logging import ts, write_manifest, update_status_json, make_status_patch
+from utils.scraping import is_stale
 
 
-def cmd_scrape_player_matchlogs_urls(args):
-    config = load_config(args.config)
+def make_scraper(scrape_cfg):
+    """Return FBRedScraper object."""
+    return FBRefScraper(
+        headless=scrape_cfg.get("headless", False),
+        wait_seconds=scrape_cfg.get("wait_seconds", 5),
+    )
+
+
+def cmd_scrape_player_matchlogs_urls(config):
+    """Scrape player matchlog URLs from FBRef and write a players manifest."""
     scrape_cfg = config["scraping"]
     output_cfg = config["output"]
 
-    player_urls_dir = Path(output_cfg["player_urls_dir"])
-    player_urls_dir.mkdir(parents=True, exist_ok=True)
+    public_dir = Path(output_cfg["public_dir"])
+    public_dir.mkdir(parents=True, exist_ok=True)
 
-    manifest_path = player_urls_dir / "players_manifest.json"
-
+    manifest_path = public_dir / "players_manifest.json"
     base_url = config["discovery"].get("base_url")
-    
-    scraper = FBRefScraper(
-        headless = scrape_cfg.get("headless", False),
-        wait_seconds = scrape_cfg.get("wait_seconds", 5),
-    )        
+
+    scraper = make_scraper(scrape_cfg)
 
     try:
-        print(f"[{ts()}] Scraping player URLs from: { base_url }")
+        print(f"[{ts()}] Scraping player URLs from: {base_url}")
         players = scraper.scrape_player_matchlogs_urls(base_url)
-        manifest_path.write_text(json.dumps(players, indent=2))
+        write_manifest(manifest_path, players)
         print(f"[{ts()}] Saved manifest -> {manifest_path} ({len(players)} players)")
 
     finally:
         scraper.close()
 
 
-def cmd_scrape_player_matchlogs_data(args):
-    config = load_config(args.config)
+def cmd_scrape_player_matchlogs_data(config):
+    """Scrape player matchlog data from FBRef and write CSV files."""
     scrape_cfg = config["scraping"]
     discovery_cfg = config["discovery"]
     output_cfg = config["output"]
 
-    # Read manifest for matchlog URLs
-    player_urls_dir = Path(output_cfg["player_urls_dir"])
-    manifest_path = player_urls_dir / "players_manifest.json"
-    
-    # Where matchlogs data will be written
+    public_dir = Path(output_cfg["public_dir"])
+    manifest_path = public_dir / "players_manifest.json"
+
     matchlogs_dir = Path(output_cfg["matchlogs_dir"])
     matchlogs_dir.mkdir(parents=True, exist_ok=True)
 
     players = json.loads(manifest_path.read_text())
     seasons = discovery_cfg.get("seasons")
+    file_format = output_cfg.get("file_format")
+    delay_s = scrape_cfg.get("request_delay_seconds", 0)
 
-    scraper = FBRefScraper(
-        headless=scrape_cfg.get("headless", False),
-        wait_seconds=scrape_cfg.get("wait_seconds", 5),
-    )
+    scraper = make_scraper(scrape_cfg)
 
-    # TODO: Freshness logic
-    # Scrape players based on data freshness, i.e. p["last_scraped_date"]
-    # For now, scrape everyone:
-    players_to_scrape = players
+    players_to_scrape = [p for p in players if is_stale(p)]
 
     try:
         for player in players_to_scrape:
@@ -67,45 +66,57 @@ def cmd_scrape_player_matchlogs_data(args):
             slug = player["player_slug"]
 
             for season in seasons:
-                url = matchlogs_url.format(season=season)
-                
+                url = matchlogs_url.format(season = season)
+
                 print(f"[{ts()}] Scraping {url} ...")
                 df = scraper.scrape_player_matchlogs_data(url)
-                out_name = f"{slug}_{season}.csv"
+
+                out_name = f"{slug}_{season}.{file_format}"
                 out_path = matchlogs_dir / out_name
                 df.to_csv(out_path, index=False)
                 print(f"[{ts()}] Saved -> {out_path}")
-                
-                time.sleep(scrape_cfg.get("request_delay_seconds"))
-            
-            # Update manifest after each scrape
-            player["last_scraped_date"] = now_iso_utc()
+
+                time.sleep(delay_s)
+
+            player["last_scraped_date"] = ts()
             write_manifest(manifest_path, players)
 
-            time.sleep(scrape_cfg.get("request_delay_seconds"))
+            time.sleep(delay_s)
 
     finally:
         scraper.close()
 
 
 def main():
+    # Config
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config.yml")
     args = parser.parse_args()
-    
-    # Run discovery -> writes players_manifest.json
-    cmd_scrape_player_matchlogs_urls(args)
+    config = load_config(args.config) # Scraping params
+    public_dir = Path("public")
 
-    # Run scrape -> reads players_manifest.json and writes matchlogs
-    cmd_scrape_player_matchlogs_data(args)
+    # Duration tracking
+    started_utc = ts()
+    t0 = time.perf_counter()
+
+    # Scrape players manifest
+    cmd_scrape_player_matchlogs_urls(config)
+
+    # Reads players manifest and scrape matchlogs
+    cmd_scrape_player_matchlogs_data(config)
+
+    duration_s = round(time.perf_counter() - t0, 3)
+    finished_utc = ts()
+
+    status_patch = make_status_patch(
+        step_name = "cli.py",
+        info = "Extract/scrape player matchlogs raw data.",
+        started_utc = started_utc,
+        finished_utc = finished_utc,
+        duration_s = duration_s,
+    )
+    update_status_json(public_dir / "status.json", status_patch)
 
 
 if __name__ == "__main__":
     main()
-
-
-""" 
-    
-    python3 -m scraping.cli --config scraping/config.yml
-
-"""

@@ -11,6 +11,6 @@ discovery:
     - "2025-2026"  
 
 output:
-  player_urls_dir: "data/raw/fbref/player_urls"
+  public_dir: "public"
   matchlogs_dir: "data/raw/fbref/matchlogs"
   file_format: "csv"

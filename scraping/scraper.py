@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 from utils.logging import ts
 
@@ -53,7 +54,7 @@ class FBRefScraper:
                 
         if headless:
             options.add_argument("--headless=new")
-        
+
         self.driver = webdriver.Chrome(
             service=service,
             options=options
@@ -108,7 +109,10 @@ class FBRefScraper:
     def scrape_player_matchlogs_data(self, url: str) -> pd.DataFrame:
         
         self.driver.get(url)
-        time.sleep(self.wait_seconds)
+
+        # Waits until matchlogs table exists in DOM
+        wait = WebDriverWait(self.driver, self.wait_seconds)
+        wait.until(EC.presence_of_element_located((By.ID, "matchlogs_all")))
         
         csv_text = self.driver.execute_script(JS_EXTRACT_TABLE)
         
