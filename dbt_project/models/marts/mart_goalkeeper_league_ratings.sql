@@ -86,9 +86,9 @@ keepers_scored as (
 
       k.*,
 
-    -- Composite performance is a weighted sum of league-standardised metrics, 
+    -- Overall performance as a weighted sum of league-standardised metrics, 
     -- with approximately 45% emphasis on shot-stopping outcomes, 20% on box 
-    -- command, and 30% on distribution and sweeping actions.        
+    -- command (i.e crossing), and 30% on distribution and sweeping actions.        
     (0.20 * z_save_pct)
     + (0.25 * z_psxg_minus_ga)
     + (0.20 * z_crosses_stopped_pct)
@@ -107,7 +107,7 @@ final as (
 
       *,
 
-      -- Rank goalkeepers based on composite performance metric
+      -- Rank goalkeepers based on overall performance metric
       rank() over (order by overall_score desc) as overall_rank
 
   from keepers_scored
