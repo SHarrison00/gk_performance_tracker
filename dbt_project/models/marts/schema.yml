@@ -197,7 +197,7 @@ models:
         description: >
           Overall performance as a weighted sum of league-standardised metrics, 
           with approximately 45% emphasis on shot-stopping outcomes, 20% on box 
-          command (i.e crossing), and 30% on distribution and sweeping actions.        
+          command (i.e crossing), 20% on distribution and 15% on sweeping.        
 
       - name: overall_rank
         description: >

@@ -88,13 +88,13 @@ keepers_scored as (
 
     -- Overall performance as a weighted sum of league-standardised metrics, 
     -- with approximately 45% emphasis on shot-stopping outcomes, 20% on box 
-    -- command (i.e crossing), and 30% on distribution and sweeping actions.        
+    -- command (i.e crossing), 20% on distribution and 15% on sweeping.        
     (0.20 * z_save_pct)
     + (0.25 * z_psxg_minus_ga)
     + (0.20 * z_crosses_stopped_pct)
     + (0.10 * z_pass_att_p90)
     + (0.10 * z_long_kick_pass_completion_pct)
-    + (0.10 * z_def_actions_outside_pen_area_p90)
+    + (0.15 * z_def_actions_outside_pen_area_p90)
     as overall_score
 
   from keepers_normalised k
