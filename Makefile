@@ -1,11 +1,11 @@
-.PHONY: help pipeline scrape load dbt stage upload
+.PHONY: help pipeline scrape load transform stage upload
 
 help:
 	@echo "Available targets:"
-	@echo "  make pipeline  - Run full data pipeline (scrape → load → dbt → stage → upload)"
+	@echo "  make pipeline  - Run full data pipeline (scrape → load → transform → stage → upload)"
 	@echo "  make scrape    - Scrape raw matchlogs data"
 	@echo "  make load      - Load raw data into DuckDB"
-	@echo "  make dbt       - Run dbt transformations"
+	@echo "  make transform - Run dbt transformations"
 	@echo "  make stage     - Export curated tables to public/"
 	@echo "  make upload    - Upload public/ data to S3"
 
@@ -22,7 +22,7 @@ scrape:
 load:
 	python -m scripts.load_duckdb
 
-dbt:
+transform:
 	python -m scripts.run_dbt_build
 
 stage:

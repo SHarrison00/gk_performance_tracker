@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 from utils.logging import ts
 
@@ -47,7 +47,12 @@ PLAYER_RE = re.compile(r"^/en/players/([^/]+)/([^/]+)$")
 
 
 class FBRefScraper:
-    def __init__(self, headless: bool = False, wait_seconds = 5):
+    def __init__(self, 
+                 headless: bool = False, 
+                 wait_seconds: int = 5,
+                 retries: int = 5,
+                 success_delay_seconds: int = 2
+                 ):
 
         options = Options()
         service = Service("/usr/local/bin/chromedriver")
@@ -60,7 +65,8 @@ class FBRefScraper:
             options=options
         )        
         self.wait_seconds = wait_seconds
-
+        self.retries = retries
+        
     
     def close(self):
         self.driver.quit()
@@ -104,26 +110,44 @@ class FBRefScraper:
             }
 
         return list(players_by_id.values())
-
+    
 
     def scrape_player_matchlogs_data(self, url: str) -> pd.DataFrame:
-        
-        self.driver.get(url)
 
-        # Waits until matchlogs table exists in DOM
-        wait = WebDriverWait(self.driver, self.wait_seconds)
-        wait.until(EC.presence_of_element_located((By.ID, "matchlogs_all")))
-        
-        csv_text = self.driver.execute_script(JS_EXTRACT_TABLE)
-        
-        if not csv_text or csv_text.startswith("NO_TABLE"):
-          raise RuntimeError(
-              f"[{ts()}] Failed to extract table.\n"
-              f"URL: {url}\n"
-              f"csv_text: {csv_text}"
-          )        
-        
-        return pd.read_csv(StringIO(csv_text))
+        for attempt in range(self.retries):
+            try:
+                self.driver.get(url)
+
+                targ_elt = "matchlogs_all"
+                wait = WebDriverWait(self.driver, self.wait_seconds)
+                wait.until(EC.presence_of_element_located((By.ID, targ_elt)))
+
+                csv_text = self.driver.execute_script(JS_EXTRACT_TABLE)
+
+                if not csv_text or str(csv_text).startswith("NO_TABLE"):
+                    raise RuntimeError("Matchlogs table not found")
+
+                df = pd.read_csv(StringIO(csv_text))
+
+                if df.empty:
+                    raise RuntimeError("Matchlogs table empty")
+
+                time.sleep(self.success_delay_seconds)
+
+                return df
+
+            except (TimeoutException, WebDriverException, RuntimeError) as e:
+                if attempt == self.retries - 1:
+                    raise
+
+                sleep_s = 2 ** attempt
+                print(
+                    f"[{ts()}] Retry {attempt+1}/{self.retries} scraping {url}"
+                    f"({type(e).__name__}) – sleeping {sleep_s}s"
+                )
+                time.sleep(sleep_s)
+
+
 
 
 def load_config(path: str | Path) -> dict:

@@ -1,8 +1,9 @@
 
 scraping:
   headless: False
-  wait_seconds: 3
-  request_delay_seconds: 2
+  wait_seconds: 5
+  retries: 5
+  success_delay_seconds: 2
   output_data_format: "csv"
 
 discovery:

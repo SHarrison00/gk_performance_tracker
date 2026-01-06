@@ -11,8 +11,10 @@ from utils.scraping import is_stale
 def make_scraper(scrape_cfg):
     """Return FBRedScraper object."""
     return FBRefScraper(
-        headless=scrape_cfg.get("headless", False),
-        wait_seconds=scrape_cfg.get("wait_seconds", 5),
+        headless = scrape_cfg.get("headless", False),
+        wait_seconds = scrape_cfg.get("wait_seconds", 5),
+        retries = scrape_cfg.get("retries", 5),
+        success_delay_seconds = scrape_cfg.get("success_delay_seconds", 0),
     )
 
 
@@ -54,7 +56,6 @@ def cmd_scrape_player_matchlogs_data(config):
     players = json.loads(manifest_path.read_text())
     seasons = discovery_cfg.get("seasons")
     file_format = output_cfg.get("file_format")
-    delay_s = scrape_cfg.get("request_delay_seconds", 0)
 
     scraper = make_scraper(scrape_cfg)
 
@@ -76,12 +77,8 @@ def cmd_scrape_player_matchlogs_data(config):
                 df.to_csv(out_path, index=False)
                 print(f"[{ts()}] Saved -> {out_path}")
 
-                time.sleep(delay_s)
-
             player["last_scraped_date"] = ts()
             write_manifest(manifest_path, players)
-
-            time.sleep(delay_s)
 
     finally:
         scraper.close()

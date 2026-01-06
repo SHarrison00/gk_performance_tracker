@@ -8,9 +8,9 @@
   },
   "load_duckdb.py": {
     "info": "Load player matchlogs data into DB.",
-    "started_utc": "2026-01-01T13:11:58+00:00",
-    "finished_utc": "2026-01-01T13:11:59+00:00",
-    "duration_s": 1.799,
+    "started_utc": "2026-01-06T20:52:41+00:00",
+    "finished_utc": "2026-01-06T20:52:43+00:00",
+    "duration_s": 1.236,
     "tables": {
       "aaron_ramsdale_2025_2026": "28 rows",
       "alisson_2025_2026": "19 rows",
@@ -46,9 +46,9 @@
   },
   "run_dbt_build.py": {
     "info": "Transform loaded data into final tables using dbt.",
-    "started_utc": "2026-01-01T13:12:00+00:00",
-    "finished_utc": "2026-01-01T13:12:23+00:00",
-    "duration_s": 23.906,
+    "started_utc": "2026-01-06T20:52:47+00:00",
+    "finished_utc": "2026-01-06T20:53:00+00:00",
+    "duration_s": 13.441,
     "tables": null
   },
   "stage_public_tables.py": {
