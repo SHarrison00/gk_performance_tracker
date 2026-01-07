@@ -3,7 +3,7 @@ version: 2
 
 models:
   - name: fct_goalkeeper_performance
-    description: "Aggregated goalkeeper performance metrics for EPL matches"    
+    description: "Aggregated goalkeeper performance over all EPL matches."    
     meta:
       grain: "goalkeeper"
       source: "FBref.com"
@@ -81,7 +81,8 @@ models:
 
 
   - name: mart_goalkeeper_league_ratings
-    description: "Goalkeepers league-relative performance."    
+    description: >
+      Goalkeeper performance relative to other goalkeepers in the EPL.
     meta:
       grain: "goalkeeper"
       source: "FBref.com"

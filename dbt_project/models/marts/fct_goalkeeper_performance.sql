@@ -14,6 +14,8 @@ with base as (
 ),
 
 
+-- Additional step for robustness against goalkeepers have played for >1 team
+-- (i.e if a goalkeeper is transferred from one club to another)
 latest_team as (
 
     select

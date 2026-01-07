@@ -40,13 +40,24 @@ Tooling choices were guided by fitness-for-purpose, with the aim of maximising c
 
 ## Data Modelling Approach
 
-TO ADD
+Data is modelled using a simple layered approach designed to minimise ambiguity with each layer having a clear, single responsibility. Given the project’s objective, the modelling approach prioritises analytics-ready data marts that support direct reads in the front end. For example, `fct_goalkeeper_performance` serves as the primary source of truth for goalkeeper performance metrics, while `mart_goalkeeper_league_ratings` builds on this foundation to compare goalkeepers relative to the league.
+
+**Model layers:**
+
+-	`stg_matchlogs_all`: All raw match log data from FBRef.com.
+-	`stg_matchlogs_parsed`: Cleaned and parsed match-level goalkeeper data derived from match logs.
+-	`fct_goalkeeper_performance`: Aggregated goalkeeper performance over all EPL matches.
+-	`mart_goalkeeper_league_ratings`: Goalkeeper performance relative to other goalkeepers in the EPL.
 
 ## Goalkeeper Performance Framework
 
 TO ADD
 
 ## Outputs & Intended Use
+
+![Example](notebooks/example_plot.png)
+
+**Example:** Radar chart to compare three goalkeeper's performance.
 
 TO ADD
 
