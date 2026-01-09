@@ -51,16 +51,38 @@ Data is modelled using a simple layered approach designed to minimise ambiguity 
 
 ## Goalkeeper Performance Framework
 
-TO ADD
+This project approaches goalkeeper performance as inherently multi-dimensional. Rather than relying on a single headline statistic, performance is conceptualised as a combination of distinct but complementary skill areas that together describe how a goalkeeper contributes to preventing goals and supporting team play. The aim of the framework is not to define a “best” goalkeeper, but to provide a structured lens through which goalkeeper performance can be compared and explored across multiple dimensions.
+
+**Core Performance Dimensions:** Based on the data available and a football-first view of the role, goalkeeper performance is assessed across the following core dimensions and metrics:
+
+| Performance Dimension | Description | Metrics Used |
+|----------------------|-------------|--------------|
+| **Shot Stopping** | The most fundamental goalkeeper responsibility, capturing how effectively a goalkeeper prevents shots on target from becoming goals. | **Save %** – Percentage of shots on target saved by the goalkeeper.<br><br>**PSxG − GA** – Difference between post-shot expected goals conceded and actual goals conceded, indicating goals prevented relative to shot quality. |
+| **Crossing** | A goalkeeper’s ability to deal with aerial threats in the penalty area, including claiming, punching, or otherwise neutralising opposition crosses. | **Crosses Stopped %** – Percentage of opposition crosses into the penalty area that are successfully stopped by the goalkeeper. |
+| **Distribution** | Reflecting the modern role of goalkeepers as additional ball-players, this dimension captures involvement and effectiveness in passing and ball progression. | **Passes Attempted (per 90)** – Average number of passes attempted per 90 minutes, excluding goal kicks.<br><br>**Long Kick Pass Completion %** – Completion rate for launched passes over 40 yards, calculated as completed versus attempted long passes. |
+| **Sweeping** | Proactive defensive actions, often outside the penalty area, capturing how goalkeepers prevent dangerous situations before a shot occurs. | **Defensive Actions Outside Penalty Area (per 90)** – Average number of defensive interventions made outside the penalty area per 90 minutes, representing sweeping activity. |
+
+
+**Standardised Comparison:** To enable fair comparison across goalkeepers, metrics are standardised at the league level. This allows performance to be interpreted relative to peers, rather than in isolation, and helps surface strengths and weaknesses across different dimensions without relying on raw totals. The resulting outputs are intended to support comparison, not final judgments.
+
+**Subjectivity:** This framework is explicitly subjective. Other dimensions could reasonably be included, and many metrics are influenced by external factors such as team defensive structure, opposition quality, and tactical role. Rather than claiming objectivity, the framework aims to provide a transparent and interpretable view of performance based on dimensions that are widely recognised in football analysis. The choices of dimensions, metrics, and relative importance reflect informed judgment rather than universal truth.
 
 ## Outputs & Intended Use
+
+The core data products are the `fct_goalkeeper_performance` and `mart_goalkeeper_league_ratings` tables described above. These datasets are designed to be served to a lightweight Flask application and consumed via tables and simple visual summaries (e.g. sortable tables, radar charts), enabling users to explore and compare goalkeepers without requiring any additional transformation logic in the front end.
 
 ![Example](notebooks/example_plot.png)
 
 **Example:** Radar chart to compare three goalkeeper's performance.
 
-TO ADD
-
 ## Current Status & Roadmap
 
-TO ADD
+**Current status:**
+
+- Data ingestion, transformation, and modelling pipeline is complete.
+- Analytics-ready fact and mart tables have been finalised.
+- Front-end views and visualisations have been conceptualised at a design level.
+
+**Next steps**
+- Implement a minimal Flask front end to serve curated datasets.
+- Expose core tables via simple charts and tables for exploratory analysis.
