@@ -16,6 +16,11 @@ selenium>=4.15,<5.0
 dbt-core==1.10.15
 dbt-duckdb==1.10.0
 
-# Visualisation
+# App
 plotly>=5.20.0
 dash>=2.16.0  
+Flask>=2.3.3,<3.0
+dash-ag-grid>=31.0.0
+
+# TO DO
+# Add fastparquet
