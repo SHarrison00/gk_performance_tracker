@@ -1,20 +1,23 @@
-
 version: 2
 
 models:
   - name: fct_goalkeeper_performance
-    description: "Aggregated goalkeeper performance over all EPL matches."    
+    description: "Aggregated goalkeeper performance over all EPL matches."
     meta:
       grain: "goalkeeper"
       source: "FBref.com"
     columns:
       - name: goalkeeper
         description: "Goalkeeper identifier"
+        meta:
+          label: "Goalkeeper"
         tests:
           - not_null
 
       - name: team
         description: "Goalkeeper's team identifier"
+        meta:
+          label: "Team"
         tests:
           - not_null
 
@@ -22,62 +25,86 @@ models:
         description: >
           Number of Premier League matches in which the goalkeeper played
           at least one minute for the given team.
+        meta:
+          label: "Matches Played"
 
       - name: clean_sheets
         description: >
           Total number of clean sheets kept by the goalkeeper.
+        meta:
+          label: "Clean Sheets"
 
       - name: ga
         description: "Total number of goals conceded by the goalkeeper"
+        meta:
+          label: "Goals Against"
 
       - name: saves
         description: "Total number of saves made by the goalkeeper"
+        meta:
+          label: "Saves"
 
       - name: shots_on_target_against
         description: "Total number of shots on target faced by the goalkeeper"
+        meta:
+          label: "Shots on Target Against"
 
       - name: save_pct
         description: >
           Save percentage calculated as total saves divided by
           shots on target faced, expressed as a percentage.
+        meta:
+          label: "Save %"
 
       - name: psxg_minus_ga
         description: >
           Difference between post-shot expected goals conceded (PSxG)
           and actual goals conceded. Positive values indicate goals prevented
           relative to shot quality faced.
+        meta:
+          label: "PSxG − GA"
 
       - name: crosses_faced_p90
         description: >
           Average number of opposition crosses faced per 90 minutes played,
           calculated from total crosses divided by minutes played.
+        meta:
+          label: "Crosses Faced (per 90)"
 
       - name: crosses_stopped_pct
         description: >
           Percentage of opposition crosses into the penalty area
           that were successfully stopped by the goalkeeper.
+        meta:
+          label: "Crosses Stopped %"
 
       - name: pass_att_p90
         description: >
           Average number of passes attempted per 90 minutes played,
           excluding goal kicks.
+        meta:
+          label: "Pass Attempts (per 90)"
 
       - name: long_kick_pass_completion_pct
         description: >
           Completion percentage for launched passes over 40 yards,
           calculated from completed versus attempted launched passes.
+        meta:
+          label: "Long Kick Pass Completion %"
 
       - name: def_actions_outside_pen_area_p90
         description: >
           Average number of defensive actions taken outside the penalty area
           per 90 minutes played, representing sweeping activity.
+        meta:
+          label: "Def. Actions OPA (per 90)"
 
       - name: avg_distance_def_actions
         description: >
           Average distance from goal (in yards) of defensive actions
           taken outside the penalty area.
-
-
+        meta:
+          label: "Avg. Distance of Def. Actions"
 
 
   - name: mart_goalkeeper_league_ratings
@@ -89,11 +116,15 @@ models:
     columns:
       - name: goalkeeper
         description: "Goalkeeper identifier"
+        meta:
+          label: "Goalkeeper"
         tests:
           - not_null
 
       - name: team
         description: "Goalkeeper's team identifier"
+        meta:
+          label: "Team"
         tests:
           - not_null
 
@@ -101,106 +132,146 @@ models:
         description: >
           Save percentage calculated as total saves divided by
           shots on target faced, expressed as a percentage.
+        meta:
+          label: "Save %"
 
       - name: psxg_minus_ga
         description: >
           Difference between post-shot expected goals conceded (PSxG)
           and actual goals conceded. Positive values indicate goals prevented
           relative to shot quality faced.
+        meta:
+          label: "PSxG − GA"
 
       - name: crosses_stopped_pct
         description: >
           Percentage of opposition crosses into the penalty area
           that were successfully stopped by the goalkeeper.
+        meta:
+          label: "Crosses Stopped %"
 
       - name: pass_att_p90
         description: >
           Average number of passes attempted per 90 minutes played,
           excluding goal kicks.
+        meta:
+          label: "Pass Attempts (per 90)"
 
       - name: long_kick_pass_completion_pct
         description: >
           Completion percentage for launched passes over 40 yards,
           calculated from completed versus attempted launched passes.
+        meta:
+          label: "Long Kick Pass Completion %"
 
       - name: def_actions_outside_pen_area_p90
         description: >
           Average number of defensive actions taken outside the penalty area
           per 90 minutes played, representing sweeping activity.
+        meta:
+          label: "Def. Actions OPA (per 90)"
 
       - name: z_save_pct
         description: >
-          Save percentage Z-score relative to other goalkeepers in the English 
+          Save percentage Z-score relative to other goalkeepers in the English
           Premier League (higher values correspond to better shot-stopping
           performance).
+        meta:
+          label: "Z: Save %"
 
       - name: z_psxg_minus_ga
         description: >
-          'PSxG - GA' Z-score relative to other goalkeepers in the English 
+          'PSxG - GA' Z-score relative to other goalkeepers in the English
           Premier League (higher values correspond to better shot-stopping
           performance).
+        meta:
+          label: "Z: PSxG − GA"
 
       - name: z_crosses_stopped_pct
         description: >
-          Crosses stopped percentage Z-score relative to other goalkeepers in 
-          the English Premier League (higher values correspond to better 
+          Crosses stopped percentage Z-score relative to other goalkeepers in
+          the English Premier League (higher values correspond to better
           crossing performance).
+        meta:
+          label: "Z: Crosses Stopped %"
 
       - name: z_pass_att_p90
         description: >
-          Average passes attempted per-90 Z-score relative to other goalkeepers 
-          in the English Premier League (higher values correspond to better 
+          Average passes attempted per-90 Z-score relative to other goalkeepers
+          in the English Premier League (higher values correspond to better
           passing performance).
+        meta:
+          label: "Z: Pass Attempts (per 90)"
 
       - name: z_long_kick_pass_completion_pct
         description: >
-          Long kick pass completion percentage Z-score relative to other 
-          goalkeepers in the English Premier League (higher values correspond 
+          Long kick pass completion percentage Z-score relative to other
+          goalkeepers in the English Premier League (higher values correspond
           to better passing performance).
+        meta:
+          label: "Z: Long Kick Pass Completion %"
 
       - name: z_def_actions_outside_pen_area_p90
         description: >
-          Average defensive actions OPA per-90 Z-score relative to other 
-          goalkeepers in the English Premier League (higher values correspond 
+          Average defensive actions OPA per-90 Z-score relative to other
+          goalkeepers in the English Premier League (higher values correspond
           to better sweeping performance).
+        meta:
+          label: "Z: Def. Actions OPA (per 90)"
 
       - name: pct_save_pct
         description: >
-          Save percentage performance percentile relative to other goalkeepers 
+          Save percentage performance percentile relative to other goalkeepers
           in the English Premier League.
+        meta:
+          label: "Pctile: Save %"
 
       - name: pct_psxg_minus_ga
         description: >
-          'PSxG - GA' performance percentile relative to other goalkeepers 
+          'PSxG - GA' performance percentile relative to other goalkeepers
           in the English Premier League.
+        meta:
+          label: "Pctile: PSxG − GA"
 
       - name: pct_crosses_stopped_pct
         description: >
-          Crosses stopped percentage performance percentile relative to other 
+          Crosses stopped percentage performance percentile relative to other
           goalkeepers in the English Premier League.
+        meta:
+          label: "Pctile: Crosses Stopped %"
 
       - name: pct_pass_att_p90
         description: >
-          Average passes attempted per-90 performance percentile relative to 
+          Average passes attempted per-90 performance percentile relative to
           other goalkeepers in the English Premier League.
+        meta:
+          label: "Pctile: Pass Attempts (per 90)"
 
       - name: pct_long_kick_pass_completion_pct
         description: >
-          Long kick pass completion percentage performance percentile relative 
+          Long kick pass completion percentage performance percentile relative
           to other goalkeepers in the English Premier League.
+        meta:
+          label: "Pctile: Long Kick Pass Completion %"
 
       - name: pct_def_actions_outside_pen_area_p90
         description: >
-          Average defensive actions OPA per-90 performacne percentile relative 
+          Average defensive actions OPA per-90 performacne percentile relative
           to other goalkeepers in the English Premier League.
+        meta:
+          label: "Pctile: Def. Actions OPA (per 90)"
 
       - name: overall_score
         description: >
-          Overall performance as a weighted sum of league-standardised metrics, 
-          with approximately 45% emphasis on shot-stopping outcomes, 20% on box 
-          command (i.e crossing), 20% on distribution and 15% on sweeping.        
+          Overall performance as a weighted sum of league-standardised metrics,
+          with approximately 45% emphasis on shot-stopping outcomes, 20% on box
+          command (i.e crossing), 20% on distribution and 15% on sweeping.
+        meta:
+          label: "Overall Score"
 
       - name: overall_rank
         description: >
-          Rank English Premier League goalkeepers based on the overall 
+          Rank English Premier League goalkeepers based on the overall
           performance metric (i.e. 'overall_score').
+        meta:
+          label: "Overall Rank"

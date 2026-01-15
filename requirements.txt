@@ -16,11 +16,18 @@ selenium>=4.15,<5.0
 dbt-core==1.10.15
 dbt-duckdb==1.10.0
 
+# dbt transitive deps (pin to avoid broken compiled installs)
+pydantic>=2,<3
+pydantic-core>=2,<3
+
 # App
 plotly>=5.20.0
 dash>=2.16.0  
 Flask>=2.3.3,<3.0
 dash-ag-grid>=31.0.0
 
-# TO DO
-# Add fastparquet
+# AWS
+boto3>=1.34,<2.0
+
+# Environment
+python-dotenv>=1.0,<2.0

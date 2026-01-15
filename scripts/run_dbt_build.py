@@ -7,6 +7,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from utils.logging import ts, update_status_json, make_status_patch
 from utils.shell import run_cmd
+from utils.dbt_outputs import write_table_metadata
 
 
 def main():
@@ -20,6 +21,8 @@ def main():
 
     run_cmd(["dbt", "debug"], cwd = dbt_dir)
     run_cmd(["dbt", "build"], cwd = dbt_dir)
+    
+    write_table_metadata(dbt_dir, public_dir)
 
     duration_s = round(time.perf_counter() - t0, 3)
     finished_utc = ts()
