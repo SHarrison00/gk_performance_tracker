@@ -46,16 +46,16 @@
   },
   "run_dbt_build.py": {
     "info": "Transform loaded data into final tables using dbt.",
-    "started_utc": "2026-01-15T11:15:21+00:00",
-    "finished_utc": "2026-01-15T11:15:35+00:00",
-    "duration_s": 14.066,
+    "started_utc": "2026-01-15T17:47:33+00:00",
+    "finished_utc": "2026-01-15T17:47:47+00:00",
+    "duration_s": 14.54,
     "tables": null
   },
   "stage_public_tables.py": {
     "info": "Export DuckDB tables to public/ for downstream upload to S3.",
-    "started_utc": "2026-01-15T11:16:08+00:00",
-    "finished_utc": "2026-01-15T11:16:08+00:00",
-    "duration_s": 0.092,
+    "started_utc": "2026-01-15T17:47:58+00:00",
+    "finished_utc": "2026-01-15T17:47:58+00:00",
+    "duration_s": 0.085,
     "tables": {
       "fct_goalkeeper_performance": "30 rows",
       "mart_goalkeeper_league_ratings": "25 rows"
@@ -63,9 +63,9 @@
   },
   "upload_public_to_s3.py": {
     "info": "Upload data to S3 (and history snapshot for rollback).",
-    "started_utc": "2026-01-15T11:16:31+00:00",
-    "finished_utc": "2026-01-15T11:16:39+00:00",
-    "duration_s": 7.719,
+    "started_utc": "2026-01-15T17:48:02+00:00",
+    "finished_utc": "2026-01-15T17:48:08+00:00",
+    "duration_s": 5.937,
     "tables": null
   }
 }

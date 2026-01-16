@@ -1,0 +1,22 @@
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+
+.app-shell { min-height: 100vh; background: #fafafa; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 16px 20px;
+  background: white;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.app-title { margin: 0; }
+.app-subtitle { color: #666; font-size: 14px; margin-top: 4px; }
+
+.navbar { display: flex; gap: 12px; }
+.nav-link { text-decoration: none; color: #333; padding: 6px 10px; border-radius: 8px; }
+.nav-link:hover { background: #f1f1f1; }
+
+.main { padding: 20px; }
+.page { background: white; padding: 16px; border: 1px solid #eee; border-radius: 12px; }

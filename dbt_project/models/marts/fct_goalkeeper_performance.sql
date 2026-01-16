@@ -87,7 +87,7 @@ final as (
 
         a.goalkeeper,
         t.team,
-        a.*
+        a.* exclude (goalkeeper)
 
     from agg a
     left join latest_team t

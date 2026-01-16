@@ -1,4 +1,0 @@
-
-aws:
-  bucket: gk-performance-tracker-data
-  prefix: latest
