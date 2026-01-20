@@ -20,3 +20,26 @@ body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-
 
 .main { padding: 20px; }
 .page { background: white; padding: 16px; border: 1px solid #eee; border-radius: 12px; }
+
+.two-col {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.col-left {
+  flex: 2;              /* table wider */
+  min-width: 0;         /* important for overflow in flex children */
+}
+
+.col-right {
+  flex: 1;              /* plot narrower */
+  min-width: 0;
+}
+
+/* Optional: stack on small screens */
+@media (max-width: 1000px) {
+  .two-col {
+    flex-direction: column;
+  }
+}

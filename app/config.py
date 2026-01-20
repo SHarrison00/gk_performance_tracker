@@ -16,8 +16,8 @@ class Config:
     DATA_DIR: Path = (PROJECT_DIR / os.getenv("DATA_DIR", "app/data/raw")).resolve()
     
     # Min time between S3 sync attempts
-    MIN_SYNC_INTERVAL_SECONDS: int = int(os.getenv("MIN_SYNC_INTERVAL_SECONDS"))
+    MIN_SYNC_INTERVAL_SECONDS: int = int(os.getenv("MIN_SYNC_INTERVAL_SECONDS", 300))
     
     # AWS
-    S3_BUCKET: str = os.getenv("S3_BUCKET")
-    S3_PREFIX: str = os.getenv("S3_PREFIX")
+    S3_BUCKET: str = os.getenv("S3_BUCKET", "gk-performance-tracker-data")
+    S3_PREFIX: str = os.getenv("S3_PREFIX", "latest")

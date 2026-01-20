@@ -8,9 +8,9 @@
   },
   "load_duckdb.py": {
     "info": "Load player matchlogs data into DB.",
-    "started_utc": "2026-01-15T11:12:11+00:00",
-    "finished_utc": "2026-01-15T11:12:12+00:00",
-    "duration_s": 1.282,
+    "started_utc": "2026-01-20T20:07:25+00:00",
+    "finished_utc": "2026-01-20T20:07:26+00:00",
+    "duration_s": 1.139,
     "tables": {
       "aaron_ramsdale_2025_2026": "28 rows",
       "alisson_2025_2026": "19 rows",
@@ -46,15 +46,15 @@
   },
   "run_dbt_build.py": {
     "info": "Transform loaded data into final tables using dbt.",
-    "started_utc": "2026-01-15T17:47:33+00:00",
-    "finished_utc": "2026-01-15T17:47:47+00:00",
-    "duration_s": 14.54,
+    "started_utc": "2026-01-20T20:07:28+00:00",
+    "finished_utc": "2026-01-20T20:07:45+00:00",
+    "duration_s": 16.897,
     "tables": null
   },
   "stage_public_tables.py": {
     "info": "Export DuckDB tables to public/ for downstream upload to S3.",
-    "started_utc": "2026-01-15T17:47:58+00:00",
-    "finished_utc": "2026-01-15T17:47:58+00:00",
+    "started_utc": "2026-01-20T20:07:48+00:00",
+    "finished_utc": "2026-01-20T20:07:48+00:00",
     "duration_s": 0.085,
     "tables": {
       "fct_goalkeeper_performance": "30 rows",
@@ -63,9 +63,9 @@
   },
   "upload_public_to_s3.py": {
     "info": "Upload data to S3 (and history snapshot for rollback).",
-    "started_utc": "2026-01-15T17:48:02+00:00",
-    "finished_utc": "2026-01-15T17:48:08+00:00",
-    "duration_s": 5.937,
+    "started_utc": "2026-01-20T20:07:56+00:00",
+    "finished_utc": "2026-01-20T20:08:03+00:00",
+    "duration_s": 7.537,
     "tables": null
   }
 }

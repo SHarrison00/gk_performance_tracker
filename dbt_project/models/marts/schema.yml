@@ -97,14 +97,14 @@ models:
           Average number of defensive actions taken outside the penalty area
           per 90 minutes played, representing sweeping activity.
         meta:
-          label: "Def. Actions OPA (per 90)"
+          label: "Def Actions OPA (per 90)"
 
       - name: avg_distance_def_actions
         description: >
           Average distance from goal (in yards) of defensive actions
           taken outside the penalty area.
         meta:
-          label: "Avg. Distance of Def. Actions"
+          label: "Avg Distance of Def Actions"
 
 
   - name: mart_goalkeeper_league_ratings

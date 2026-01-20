@@ -443,11 +443,11 @@
           "description": "Completion percentage for launched passes over 40 yards, calculated from completed versus attempted launched passes.\n"
         },
         "def_actions_outside_pen_area_p90": {
-          "label": "Def. Actions OPA (per 90)",
+          "label": "Def Actions OPA (per 90)",
           "description": "Average number of defensive actions taken outside the penalty area per 90 minutes played, representing sweeping activity.\n"
         },
         "avg_distance_def_actions": {
-          "label": "Avg. Distance of Def. Actions",
+          "label": "Avg Distance of Def Actions",
           "description": "Average distance from goal (in yards) of defensive actions taken outside the penalty area.\n"
         }
       }
