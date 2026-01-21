@@ -22,8 +22,8 @@ def create_dash_app(server):
                 [
                     html.Div(
                         [
-                            html.H2("GK Performance Tracker", className="app-title"),
-                            html.Div("League + profile exploration", className="app-subtitle"),
+                            html.H2("Goalkeeper Performance Tracker", className="app-title"),
+                            html.Div("Developed by Samuel Harrison", className="app-subtitle"),
                         ],
                         className="header-left",
                     ),
