@@ -14,6 +14,7 @@ def create_dash_app(server):
         pages_folder=str(pages_dir),
         suppress_callback_exceptions=True,
         title="GK Performance Tracker",
+        meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
     )
 
     app.layout = html.Div(
