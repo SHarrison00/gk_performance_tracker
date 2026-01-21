@@ -1,6 +1,7 @@
 # Goalkeeper Performance Tracker
 
-An end-to-end analytics platform to analyse the performance of goalkeepers in the English Premier League — built for fun and inspired by my passion for both goalkeeping and data engineering.
+An end-to-end analytics platform to analyse the performance of goalkeepers in the English Premier League — built for fun and inspired by my passion for both goalkeeping and data engineering. To visit the platform, [click here](https://goalkeeper-performance-tracker.onrender.com/) (WIP).
+
 
 ## Project Objective
 
@@ -9,6 +10,7 @@ In one sentence:
 > **A lightweight, end-to-end goalkeeper analytics platform for the Premier League that demonstrates modern data engineering principles through a domain I deeply understand.**
 
 More broadly, this project explores how a lightweight performance framework can be constructed for sports analytics use cases. Here, that framework is used to assess and compare the performance of Premier League goalkeepers.
+
 
 ## Scope & Constraints
 

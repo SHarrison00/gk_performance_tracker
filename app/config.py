@@ -17,7 +17,8 @@ class Config:
     
     # Min time between S3 sync attempts
     MIN_SYNC_INTERVAL_SECONDS: int = int(os.getenv("MIN_SYNC_INTERVAL_SECONDS", 300))
-    
+    FORCE_S3_SYNC: int = int(os.getenv("FORCE_S3_SYNC", 0))
+
     # AWS
     S3_BUCKET: str = os.getenv("S3_BUCKET", "gk-performance-tracker-data")
     S3_PREFIX: str = os.getenv("S3_PREFIX", "latest")
