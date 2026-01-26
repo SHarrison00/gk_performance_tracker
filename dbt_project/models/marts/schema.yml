@@ -169,7 +169,7 @@ models:
           Average number of defensive actions taken outside the penalty area
           per 90 minutes played, representing sweeping activity.
         meta:
-          label: "Def. Actions OPA (per 90)"
+          label: "Def Actions OPA (per 90)"
 
       - name: z_save_pct
         description: >
@@ -217,7 +217,7 @@ models:
           goalkeepers in the English Premier League (higher values correspond
           to better sweeping performance).
         meta:
-          label: "Z: Def. Actions OPA (per 90)"
+          label: "Z: Def Actions OPA (per 90)"
 
       - name: pct_save_pct
         description: >
@@ -259,7 +259,7 @@ models:
           Average defensive actions OPA per-90 performacne percentile relative
           to other goalkeepers in the English Premier League.
         meta:
-          label: "Pctile: Def. Actions OPA (per 90)"
+          label: "Pctile: Def Actions OPA (per 90)"
 
       - name: overall_score
         description: >
