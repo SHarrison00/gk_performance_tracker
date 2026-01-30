@@ -68,3 +68,21 @@ def transform_df(df: pd.DataFrame) -> pd.DataFrame:
     df = clean_numeric_columns(df)
     df = title_case_columns(df, ["Goalkeeper"])
     return df
+
+
+def get_valid_goalkeepers(df: pd.DataFrame) -> list[str]:
+    """Get valid list of goalkeepers from output DataFrame."""
+    return sorted(df["Goalkeeper"].dropna().unique()) if "Goalkeeper" in df.columns else []
+
+
+def get_n_highest_ranked_goalkeepers(df: pd.DataFrame, n: int = 2) -> list[str]:
+    """Get N highest-ranked goalkeepers from rankings data mart."""
+    if {"Goalkeeper", "Overall Rank"}.issubset(df.columns):
+        return (
+            df.dropna(subset=["Goalkeeper", "Overall Rank"])
+              .sort_values("Overall Rank", ascending=True)
+              ["Goalkeeper"]
+              .head(n)
+              .tolist()
+        )
+    return []

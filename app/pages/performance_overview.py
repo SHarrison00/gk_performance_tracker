@@ -29,7 +29,7 @@ dash.register_page(__name__,
 # -----------------------------
 df = transform_df(get_parquet_table("fct_goalkeeper_performance", None, True))
 
-REFERENCE_COLS = {"Goalkeeper", "Team"}
+REFERENCE_COLS = ["Goalkeeper", "Team"]
 METRIC_COLS = [col for col in df.columns if col not in REFERENCE_COLS]
 
 
@@ -38,7 +38,7 @@ METRIC_COLS = [col for col in df.columns if col not in REFERENCE_COLS]
 # -----------------------------
 spec = GridSpec(
     grid_id=GRID_ID,
-    reference_cols=("Goalkeeper", "Team"),
+    reference_cols=REFERENCE_COLS,
     height="50vh",
     dash_grid_options={"rowSelection": "single"},
 )
