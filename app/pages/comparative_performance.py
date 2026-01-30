@@ -1,8 +1,8 @@
 import dash
 from dash import html, dcc, Input, Output, callback
 
-from app.data.store import get_parquet_table, get_valid_goalkeepers, get_n_highest_ranked_goalkeepers
-from app.data.transforms import transform_df
+from app.data.store import get_parquet_table
+from app.data.transforms import transform_df, get_valid_goalkeepers, get_n_highest_ranked_goalkeepers
 from app.components.aggrid import GridSpec, make_aggrid, reset_grid
 from app.components.radar import get_radar_chart
 
