@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 import os
 
-BASE_DIR = Path(__file__).resolve().parents[1]  # .../gk_performance_tracker/app
-PROJECT_DIR = BASE_DIR.parent                   # .../gk_performance_tracker/gk_performance_tracker
+BASE_DIR = Path(__file__).resolve().parent  # .../app/
+PROJECT_DIR = BASE_DIR.parent               # .../gk_performance_tracker/
 
 @dataclass(frozen=True)
 class Config:
