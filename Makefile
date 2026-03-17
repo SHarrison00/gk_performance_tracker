@@ -1,4 +1,4 @@
-.PHONY: help pipeline scrape load transform stage upload
+.PHONY: help pipeline scrape load transform stage upload run
 
 help:
 	@echo "Available targets:"
@@ -8,6 +8,7 @@ help:
 	@echo "  make transform - Run dbt transformations"
 	@echo "  make stage     - Export curated tables to public/"
 	@echo "  make upload    - Upload public/ data to S3"
+	@echo "  make run       - Start the Dash application locally"
 
 pipeline:
 	python -m scraping.cli --config scraping/config.yml
@@ -30,3 +31,6 @@ stage:
 
 upload:
 	python -m scripts.upload_public_to_s3
+
+run:
+	python run.py

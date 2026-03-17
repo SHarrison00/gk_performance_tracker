@@ -1,12 +1,10 @@
 import time
-import sys
 from pathlib import Path
 
 import duckdb
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT))
 
 from utils.logging import ts, update_status_json, make_status_patch
 from utils.duckdb_io import load_df_as_table, get_rows_from_table
@@ -21,7 +19,20 @@ def build_csv_manifest(data_raw_dir, datasets):
 
 
 def clean_matchlogs_df(df):
-    """Apply the matchlogs header shift and drop empty columns."""
+    """
+    Correct a header-shift artefact from FBRef's two-row <thead>.
+
+    FBRef matchlog tables use a two-row header: the first row contains 9
+    stat-group labels (e.g. "Performance", "Passes Launched") that span
+    multiple columns, and the second row contains the individual stat
+    column names. When the JS scraper collects all <th> elements from
+    both header rows, pandas reads the combined set as a single header
+    row, leaving the 9 group labels at positions 0–8 and shifting all
+    real stat names 9 positions to the right.
+
+    This function shifts the column names back by 9, then drops the
+    resulting trailing None columns which have no corresponding data.
+    """
     df.columns = df.columns[9:].tolist() + [None] * 9
     return df.loc[:, df.columns.notna()]
 

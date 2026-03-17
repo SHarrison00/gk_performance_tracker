@@ -60,16 +60,16 @@ agg as (
         round(sum(gk_psxg) - sum(gk_goals_against), 2) as psxg_minus_ga,
 
         -- Crossing
-        round(sum(gk_crosses) / nullif(sum(minutes_played), 0), 3) * 100 as crosses_faced_p90,
+        round(sum(gk_crosses) / nullif(sum(minutes_played), 0), 3) * 90 as crosses_faced_p90,
         round(sum(gk_crosses_stopped) / nullif(sum(gk_crosses), 0), 3) * 100 as crosses_stopped_pct,
 
         -- Passing
-        round(sum(gk_passes) / nullif(sum(minutes_played), 0), 3) * 100 as pass_att_p90,
+        round(sum(gk_passes) / nullif(sum(minutes_played), 0), 3) * 90 as pass_att_p90,
         round(sum(gk_passes_completed_launched) / nullif(sum(gk_passes_launched), 0), 3) * 100
             as long_kick_pass_completion_pct,
 
         -- Sweeper
-        round(sum(gk_def_actions_outside_pen_area) / nullif(sum(minutes_played), 0), 3) * 100
+        round(sum(gk_def_actions_outside_pen_area) / nullif(sum(minutes_played), 0), 3) * 90
             as def_actions_outside_pen_area_p90,
         sum(gk_def_actions_outside_pen_area * gk_avg_distance_def_actions)
             / nullif(sum(gk_def_actions_outside_pen_area), 0)

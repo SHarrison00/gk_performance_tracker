@@ -3,9 +3,7 @@ import numpy as np
 from pathlib import Path
 import json
 
-REPO_ROOT = Path().resolve().parents[0]
-APP_ROOT = REPO_ROOT / "app"
-DATA_DIR = APP_ROOT / "data" / "raw"
+DATA_DIR = Path(__file__).resolve().parent / "raw"
 
 
 def get_clean_label_mapping(table_name: str) -> dict:
@@ -50,7 +48,7 @@ def clean_numeric_columns(df: pd.DataFrame, decimals: int = 1) -> pd.DataFrame:
     return df
 
 
-def title_case_columns(df: pd.DataFrame, columns = list[str]) -> pd.DataFrame:
+def title_case_columns(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
     """Covert lower case columns with underscores to title case."""
     df = df.copy()
     for col in columns:

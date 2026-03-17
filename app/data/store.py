@@ -1,9 +1,7 @@
 import pandas as pd
 from pathlib import Path
 
-REPO_ROOT = Path().resolve().parents[0]
-APP_ROOT = REPO_ROOT / "app"
-DATA_DIR = APP_ROOT / "data" / "raw"
+DATA_DIR = Path(__file__).resolve().parent / "raw"
 
 from .transforms import get_clean_label_mapping
 

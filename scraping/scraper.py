@@ -47,26 +47,30 @@ PLAYER_RE = re.compile(r"^/en/players/([^/]+)/([^/]+)$")
 
 
 class FBRefScraper:
-    def __init__(self, 
-                 headless: bool = False, 
+    def __init__(self,
+                 headless: bool = False,
                  wait_seconds: int = 5,
                  retries: int = 5,
-                 success_delay_seconds: int = 2
+                 success_delay_seconds: int = 2,
+                 chromedriver_path: str | None = None,
                  ):
 
         options = Options()
-        service = Service("/usr/local/bin/chromedriver")
-                
+
         if headless:
             options.add_argument("--headless=new")
+
+        # Use explicit path if provided, otherwise let Selenium resolve from PATH
+        service = Service(chromedriver_path) if chromedriver_path else Service()
 
         self.driver = webdriver.Chrome(
             service=service,
             options=options
-        )        
+        )
         self.wait_seconds = wait_seconds
         self.retries = retries
-        
+        self.success_delay_seconds = success_delay_seconds
+
     
     def close(self):
         self.driver.quit()
@@ -142,7 +146,7 @@ class FBRefScraper:
 
                 sleep_s = 2 ** attempt
                 print(
-                    f"[{ts()}] Retry {attempt+1}/{self.retries} scraping {url}"
+                    f"[{ts()}] Retry {attempt+1}/{self.retries} scraping {url} "
                     f"({type(e).__name__}) – sleeping {sleep_s}s"
                 )
                 time.sleep(sleep_s)

@@ -34,11 +34,22 @@ The players manifest also stores metadata (e.g. last scraped date), illustrating
 
 **Transformation:** All transformations are handled exclusively in dbt, using a simple layered model structure (see below). Raw match logs are unified and parsed into clean, match-level staging models before being aggregated into fact tables representing goalkeeper performance across key dimensions (shot-stopping, distribution, sweeping, and crossing).
 
-**Serving:** Curated analytical tables are exported and uploaded to a private Amazon S3 bucket, where they are consumed by a lightweight Flask-based web application (WIP). This separates analytical processing from presentation and mirrors common patterns used in production analytics systems.
+**Serving:** Curated analytical tables are exported and uploaded to a private Amazon S3 bucket, where they are consumed by a lightweight Dash web application. This separates analytical processing from presentation and mirrors common patterns used in production analytics systems.
 
 Tooling choices were guided by fitness-for-purpose, with the aim of maximising clarity and iteration speed over architectural complexity. Given the low data volume, batch cadence, and stable schema, a simple data stack was most appropriate. The project illustrates how many real-world analytics problems can be solved cleanly with a small number of well-chosen tools, provided the underlying design is sound.
 
-**Diagram:** TO ADD
+**Diagram:**
+
+```
+FBRef.com
+    │ Selenium scraper
+    ▼
+data/raw/  ──►  DuckDB  ──►  dbt (staging → marts)  ──►  public/*.parquet
+                                                               │
+                                                       S3 (upload/sync)
+                                                               │
+                                                           Dash app
+```
 
 ## Data Modelling Approach
 
@@ -71,20 +82,8 @@ This project approaches goalkeeper performance as inherently multi-dimensional. 
 
 ## Outputs & Intended Use
 
-The core data products are the `fct_goalkeeper_performance` and `mart_goalkeeper_league_ratings` tables described above. These datasets are designed to be served to a lightweight Flask application and consumed via tables and simple visual summaries (e.g. sortable tables, radar charts), enabling users to explore and compare goalkeepers without requiring any additional transformation logic in the front end.
+The core data products are the `fct_goalkeeper_performance` and `mart_goalkeeper_league_ratings` tables described above. These datasets are served to a lightweight Dash application and consumed via tables and simple visual summaries (e.g. sortable tables, radar charts), enabling users to explore and compare goalkeepers without requiring any additional transformation logic in the front end. The live application is deployed on Render and available at [goalkeeper-performance-tracker.onrender.com](https://goalkeeper-performance-tracker.onrender.com/).
 
 ![Example](notebooks/example_plot.png)
 
 **Example:** Radar chart to compare three goalkeeper's performance.
-
-## Current Status & Roadmap
-
-**Current status:**
-
-- Data ingestion, transformation, and modelling pipeline is complete.
-- Analytics-ready fact and mart tables have been finalised.
-- Front-end views and visualisations have been conceptualised at a design level.
-
-**Next steps**
-- Implement a minimal Flask front end to serve curated datasets.
-- Expose core tables via simple charts and tables for exploratory analysis.

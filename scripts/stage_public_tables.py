@@ -1,10 +1,8 @@
 import time
-import sys
 from pathlib import Path
 import duckdb
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT))
 
 from utils.logging import ts, update_status_json, make_status_patch
 from utils.duckdb_io import export_table_to_parquet, get_rows_from_table

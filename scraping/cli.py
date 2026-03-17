@@ -9,12 +9,13 @@ from utils.scraping import is_stale
 
 
 def make_scraper(scrape_cfg):
-    """Return FBRedScraper object."""
+    """Return FBRefScraper object."""
     return FBRefScraper(
-        headless = scrape_cfg.get("headless", False),
-        wait_seconds = scrape_cfg.get("wait_seconds", 5),
-        retries = scrape_cfg.get("retries", 5),
-        success_delay_seconds = scrape_cfg.get("success_delay_seconds", 0),
+        headless=scrape_cfg.get("headless", False),
+        wait_seconds=scrape_cfg.get("wait_seconds", 5),
+        retries=scrape_cfg.get("retries", 5),
+        success_delay_seconds=scrape_cfg.get("success_delay_seconds", 0),
+        chromedriver_path=scrape_cfg.get("chromedriver_path"),
     )
 
 

@@ -19,11 +19,6 @@ def normalize_prefix(prefix: str) -> str:
     return f"{prefix}/" if prefix else ""
 
 
-def normalize_prefix(prefix: str) -> str:
-    prefix = (prefix or "").strip("/")
-    return f"{prefix}/" if prefix else ""
-
-
 def list_s3_objects(s3, bucket: str, prefix: str) -> list[dict[str, Any]]:
     """
     List objects under s3://bucket/prefix.
