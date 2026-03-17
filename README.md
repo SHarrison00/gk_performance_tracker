@@ -11,6 +11,13 @@ In one sentence:
 
 More broadly, this project explores how a lightweight performance framework can be constructed for sports analytics use cases. Here, that framework is used to assess and compare the performance of Premier League goalkeepers.
 
+## Outputs & Intended Use
+
+The core data products are the `fct_goalkeeper_performance` and `mart_goalkeeper_league_ratings` tables described above. These datasets are served to a lightweight Dash application and consumed via tables and simple visual summaries (e.g. sortable tables, radar charts), enabling users to explore and compare goalkeepers without requiring any additional transformation logic in the front end. The live application is deployed on Render and available at [goalkeeper-performance-tracker.onrender.com](https://goalkeeper-performance-tracker.onrender.com/).
+
+![Example](notebooks/example_plot.png)
+
+**Example:** Radar chart to compare three goalkeeper's performance.
 
 ## Scope & Constraints
 
@@ -79,11 +86,3 @@ This project approaches goalkeeper performance as inherently multi-dimensional. 
 **Standardised Comparison:** To enable fair comparison across goalkeepers, metrics are standardised at the league level. This allows performance to be interpreted relative to peers, rather than in isolation, and helps surface strengths and weaknesses across different dimensions without relying on raw totals. The resulting outputs are intended to support comparison, not final judgments.
 
 **Subjectivity:** This framework is explicitly subjective. Other dimensions could reasonably be included, and many metrics are influenced by external factors such as team defensive structure, opposition quality, and tactical role. Rather than claiming objectivity, the framework aims to provide a transparent and interpretable view of performance based on dimensions that are widely recognised in football analysis. The choices of dimensions, metrics, and relative importance reflect informed judgment rather than universal truth.
-
-## Outputs & Intended Use
-
-The core data products are the `fct_goalkeeper_performance` and `mart_goalkeeper_league_ratings` tables described above. These datasets are served to a lightweight Dash application and consumed via tables and simple visual summaries (e.g. sortable tables, radar charts), enabling users to explore and compare goalkeepers without requiring any additional transformation logic in the front end. The live application is deployed on Render and available at [goalkeeper-performance-tracker.onrender.com](https://goalkeeper-performance-tracker.onrender.com/).
-
-![Example](notebooks/example_plot.png)
-
-**Example:** Radar chart to compare three goalkeeper's performance.
