@@ -1,15 +1,20 @@
-Welcome to your new dbt project!
+## Models
 
-### Using the starter project
+### Staging
 
-Try running the following commands:
-- dbt run
-- dbt test
+| Model | Materialization | Grain | Description |
+|-------|----------------|-------|-------------|
+| `stg_matchlogs__all` | View | goalkeeper-match | All raw match logs unioned across players |
+| `stg_matchlogs__parsed` | View | goalkeeper-match | Cleaned and type-cast match-level data |
 
+### Marts
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+| Model | Materialization | Grain | Description |
+|-------|----------------|-------|-------------|
+| `fct_goalkeeper_performance` | Table | goalkeeper | Season aggregates per goalkeeper |
+| `mart_goalkeeper_league_ratings` | Table | goalkeeper | Z-scores, percentiles and overall rank |
+
+---
+
+For full column-level documentation run:
+    `dbt docs generate && dbt docs serve`
